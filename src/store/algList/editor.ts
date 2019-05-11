@@ -8,11 +8,13 @@ import { editorActions } from '../../actions/algList/editor';
 export interface EditorState {
   alg: Alg,
   validAlg: Alg,
+  idx: number,
 }
 
 export const initialState  = {
   alg: new Alg(),
   validAlg: new Alg(),
+  idx: -1,
 }
 
 export const editorReducer = reducerWithInitialState(initialState)
@@ -37,7 +39,23 @@ export const editorReducer = reducerWithInitialState(initialState)
       : state.validAlg;
     return {...state, alg, validAlg}
   })
+  .case(editorActions.inverse, (state) => {
+    return {
+      ...state,
+      alg: state.validAlg.inverse(),
+      validAlg: state.validAlg.inverse(),
+    }
+  })
+  .case(editorActions.mirror, (state) => {
+    return {
+      ...state,
+      alg: state.validAlg.mirror(),
+      validAlg: state.validAlg.mirror(),
+    }
+  })
+  .cases([editorActions.saveNew, editorActions.save, editorActions.new, editorActions.delete], () => {
+    return initialState;
+  })
   .default((state, action) => {
-    console.log(`${action.type} was called and default reducer was used`);
     return {...state};
   })

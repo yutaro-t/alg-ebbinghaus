@@ -4,9 +4,9 @@ import { reduceReducers } from '../../utils/reduce-reducers';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 
 import { editorActions } from '../../actions/algList/editor';
-import { editorReducer, EditorState, initialState as editorInitialState } from './editor';
-import { listReducer, ListState, initialState as listInitialState } from './list';
-import { Alg } from '../Alg';
+import { listActions } from '../../actions/algList/list';
+import { editorReducer, initialState as editorInitialState } from './editor';
+import { listReducer, initialState as listInitialState } from './list';
 
 
 
@@ -16,13 +16,37 @@ const initialState = {
 };
 
 export const baseReducer = reducerWithInitialState(initialState)
-  .case(editorActions.saveAlg, (state)  => {
+  .case(editorActions.saveNew, (state)  => {
     return {
       ...state, 
-      editor: {alg: new Alg(), validAlg: new Alg()},
       list: {
+        ...state.list,
         algs: [...state.list.algs, state.editor.alg],
       }
+    }
+  })
+  .case(editorActions.save, (state) => {
+    return {
+      ...state,
+      list: {
+        ...state.list,
+        algs: state.list.algs.map((alg, i) => i === state.editor.idx ? state.editor.alg : alg)
+      }
+    }
+  })
+  .case(editorActions.delete, (state) => {
+    return {
+      ...state,
+      list: {
+        ...state.list,
+        algs: state.list.algs.filter((_, i) => i !== state.editor.idx)
+      }
+    }
+  })
+  .case(listActions.select, (state, idx) => {
+    return {
+      ...state,
+      editor: {...editorInitialState, alg: state.list.algs[idx], validAlg: state.list.algs[idx], idx},
     }
   })
   .default((state, action) => {

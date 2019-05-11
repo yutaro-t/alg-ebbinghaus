@@ -14,6 +14,5 @@ export const initialState  = {
 
 export const listReducer = reducerWithInitialState(initialState)
   .default((state, action) => {
-    console.log(`${action.type} was called and default reducer was used`);
     return {...state};
   })
