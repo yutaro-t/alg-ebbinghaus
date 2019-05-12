@@ -1,25 +1,33 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore, combineReducers, applyMiddleware} from "redux";
+import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { composeWithDevTools } from "redux-devtools-extension";
+import { createBrowserHistory } from 'history';
 import logger from 'redux-logger';
 
-import { algListReducer, AlgListState } from './algList/index';
+import { algListReducer } from './algList/index';
+import { timerMiddleware } from '../middlewares/timer';
+import { timerReducer } from './timer';
 
-const rootReducer = combineReducers({
+export const history = createBrowserHistory();
+
+export const rootReducer = combineReducers({
   algList: algListReducer,
+  timer: timerReducer,
+  router: connectRouter(history),
 });
 
-export interface AppState {
-  algList: AlgListState,
-};
+export type AppState = ReturnType<typeof rootReducer>;
 
-export default function configureStore() {
-  const middlewares: any[] = [logger];
-  const middleWareEnhancer = applyMiddleware(...middlewares);
+
+export function configureStore() {
+  const middlewares: any[] = [logger, routerMiddleware(history), timerMiddleware];
 
   const store = createStore(
     rootReducer,
-    composeWithDevTools(middleWareEnhancer)
+    composeWithDevTools(applyMiddleware(...middlewares))
   );
 
   return store;
 }
+
+export default configureStore;

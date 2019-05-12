@@ -4,32 +4,32 @@ import { connect } from 'react-redux';
 import withStyles, { WithStyles, StyleRules } from '@material-ui/core/styles/withStyles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 import { AppBar, Toolbar, Button, Typography, Grid } from '@material-ui/core';
 
 import { AppState } from '../store';
 
-const styles = (theme: Theme) => createStyles( {
+const styles = (theme: Theme): StyleRules => createStyles({
   button: {
     marginRight: theme.spacing.unit
   },
 });
 
 const mapStateToProps = (state: AppState) => ({
-
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-
 });
 
-export interface MenuBarProps extends WithStyles<typeof styles>, ReturnType<typeof mapStateToProps>, ReturnType<typeof mapDispatchToProps> {
-
-};
-
+export type MenuBarProps = WithStyles<typeof styles> & ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 export const MenuBarBase: React.SFC<MenuBarProps> = ({ classes }: MenuBarProps) => {
+
+  const PractisePanelLink = (props: any) => <Link to="/" {...props} />
+  const AlgorithmsLink = (props: any) => <Link to="/algorithms" {...props} />
+
   return (
-    <AppBar position="static">
+    <AppBar position="static" color="primary">
       <Toolbar>
         <Grid container> 
           <Grid item xs={2}>
@@ -38,11 +38,11 @@ export const MenuBarBase: React.SFC<MenuBarProps> = ({ classes }: MenuBarProps) 
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Button color="inherit" className={classes.button}>
+            <Button color="inherit" className={classes.button} component={PractisePanelLink}>
               Practise
             </Button>
-            <Button color="inherit" className={classes.button}>
-              Algolithms
+            <Button color="inherit" className={classes.button} component={AlgorithmsLink}>
+              Algorithms
             </Button>
             <Button color="inherit" className={classes.button}>
               Settings
@@ -54,4 +54,5 @@ export const MenuBarBase: React.SFC<MenuBarProps> = ({ classes }: MenuBarProps) 
   );
 }
 
-export const MenuBar = connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MenuBarBase));
+export const MenuBar = withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(MenuBarBase));
+

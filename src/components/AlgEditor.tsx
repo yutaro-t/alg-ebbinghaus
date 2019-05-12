@@ -132,4 +132,4 @@ export const AlgEditorBase: React.SFC<AlgEditProps> =
     </Paper>);
 };
 
-export const AlgEditor = connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AlgEditorBase));
+export const AlgEditor = withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(AlgEditorBase));
