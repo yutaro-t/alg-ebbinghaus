@@ -9,7 +9,8 @@ import { RubiksCube } from './RubiksCube';
 import { AppState } from '../store';
 import { createStyles, Paper, TextField, Button } from '@material-ui/core';
 import { Delete as DeleteIcon, Save as SaveIcon, SaveAlt as SaveAltIcon, Create as CreateIcon } from '@material-ui/icons';
-import { editorActions } from '../actions/algList/editor';
+import { algEditorActions } from '../actions/algEditor';
+import { Alg } from '../store/Alg';
 
 const styles = (theme: Theme): StyleRules => createStyles({
   wrapper: {
@@ -35,19 +36,19 @@ const styles = (theme: Theme): StyleRules => createStyles({
 
 
 const mapStateToProps = (state: AppState) => ({
-  ...state.algList.editor,
+  ...state.ui.algEditor,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  updateBase: (v:string) => dispatch(editorActions.updateBase(v)),
-  updatePremove: (v:string) => dispatch(editorActions.updatePremove(v)),
-  updateAuf: (v:string) => dispatch(editorActions.updateAuf(v)),
-  saveNew: () => dispatch(editorActions.saveNew()),
-  save: () => dispatch(editorActions.save()),
-  dlt: () => dispatch(editorActions.delete()),
-  newF: () => dispatch(editorActions.new()),
-  inverse: () => dispatch(editorActions.inverse()),
-  mirror: () => dispatch(editorActions.mirror()),
+  updateBase: (v:string) => dispatch(algEditorActions.updateBase(v)),
+  updatePremove: (v:string) => dispatch(algEditorActions.updatePremove(v)),
+  updateAuf: (v:string) => dispatch(algEditorActions.updateAuf(v)),
+  saveNew: (alg: Alg) => dispatch(algEditorActions.saveNew(alg)),
+  save: (idx: number, alg: Alg) => dispatch(algEditorActions.save({idx, alg})),
+  dlt: (idx: number) => dispatch(algEditorActions.delete(idx)),
+  newF: () => dispatch(algEditorActions.new()),
+  inverse: () => dispatch(algEditorActions.inverse()),
+  mirror: () => dispatch(algEditorActions.mirror()),
 })
 
 export interface AlgEditProps extends WithStyles<typeof styles>, ReturnType<typeof mapStateToProps>, ReturnType<typeof mapDispatchToProps> {
@@ -110,21 +111,21 @@ export const AlgEditorBase: React.SFC<AlgEditProps> =
         variant="contained" 
         color="primary"
         disabled={idx === -1}
-        onClick={() => save()}
+        onClick={() => save(idx, alg)}
       >
         Save<SaveIcon className={classes.icon}/>
       </Button>
       <Button className={classes.containedButton} 
         variant="contained"
         color="primary"
-        onClick={() => saveNew()}
+        onClick={() => saveNew(alg)}
       >
         Save as new<SaveAltIcon className={classes.icon}/>
       </Button>
       <Button className={classes.containedButton}
         variant="contained" 
         color="secondary"
-        onClick={() => dlt()}
+        onClick={() => dlt(idx)}
         disabled={idx === -1}
       >
         Delete<DeleteIcon className={classes.icon} />

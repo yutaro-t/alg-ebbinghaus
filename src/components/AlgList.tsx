@@ -9,7 +9,7 @@ import { RubiksCube } from './RubiksCube';
 import { AlgEditor } from './AlgEditor';
 import { Alg } from '../store/Alg';
 import { AppState } from '../store';
-import { listActions } from '../actions/algList/list';
+import { algEditorActions } from '../actions/algEditor';
 import { createStyles, CardContent, CardActionArea, Card, Grid, Typography } from '@material-ui/core';
 
 const styles = (theme: Theme): StyleRules => createStyles({
@@ -27,12 +27,12 @@ export interface AlgListBaseProps extends WithStyles<typeof styles> {
 }
 
 const mapStateToProps= (state: AppState) => ({
-  algs: state.algList.list.algs,
-  selectedIdx: state.algList.editor.idx,
+  algs: state.entities.algs.list,
+  selectedIdx: state.ui.algEditor.idx,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  select: (v: number) => dispatch(listActions.select(v)),
+  select: (idx: number, alg: Alg) => dispatch(algEditorActions.select({idx, alg})),
 });
 
 export type AlgListProps = AlgListBaseProps & ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>
@@ -45,7 +45,7 @@ export const AlgListBase: React.SFC<AlgListProps> =
 
     return (<Grid item xs = {4} key={idx}>
       <Card raised={idx === selectedIdx}>
-        <CardActionArea  className={classes.card} onClick={() => select(idx)}>
+        <CardActionArea  className={classes.card} onClick={() => select(idx, alg)}>
           <div className={classes.picture}>
             <RubiksCube cube={alg.getCube()} size={100}/>
           </div>

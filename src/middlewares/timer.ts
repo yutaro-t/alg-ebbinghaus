@@ -1,29 +1,22 @@
 
-import { timerActions } from '../actions/timer';
+import { practiceActions } from '../actions/practice';
 import { Middleware, MiddlewareAPI, Dispatch, AnyAction } from 'redux';
 
 export interface TimerableStore {
-  timer: {
-    isRunning: boolean,
-    currentTime: number,
+  ui: {
+    practice: {
+      mode: 'wait' | 'press' | 'solve',
+    }
   }
 }
 
-var timeout: any;
-
 export const timerMiddleware: Middleware = 
   <S extends TimerableStore>({ getState, dispatch }: MiddlewareAPI<Dispatch, S>) => (next: Dispatch<AnyAction>) => (action: any): any => {
-      if(action.type === timerActions.start.type || 
-          (action.type === timerActions.tick.type && getState().timer.isRunning) || 
-          (action.type === timerActions.toggle.type && !getState().timer.isRunning && getState().timer.currentTime===0)) {
-        timeout = setTimeout(()=> {
-          dispatch(timerActions.tick());
-        }, 10)
-      }
-      
-      if(action.type === timerActions.stop.type ||
-        (action.type === timerActions.toggle.type && getState().timer.isRunning)) {
-          clearTimeout(timeout);
-        }
+      if(action.type === practiceActions.start.type || 
+          (action.type === practiceActions.tick.type && getState().ui.practice.mode === 'solve')){
+            setTimeout(() => {
+              dispatch(practiceActions.tick(performance.now()));
+            }, 10 );
+          }
       return next(action);
     };
