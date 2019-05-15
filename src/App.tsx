@@ -5,6 +5,7 @@ import { createStyles } from '@material-ui/core';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route, Switch } from 'react-router';
 
+
 import { AlgList } from './components/AlgList';
 import { PractisePanel } from './components/PractisePanel';
 import { MenuBar } from './components/MenuBar';
@@ -27,6 +28,7 @@ export const AppBase: React.SFC<AppProps> = ({ classes }: AppProps) => {
             <Route exact path="/" component={PractisePanel} />
             <Route path="/algorithms" component={AlgList} />
             <Route render={() => <div>Not found Error</div>} />
+            {/* sss */}
           </Switch>
       </main>
     </ConnectedRouter>
