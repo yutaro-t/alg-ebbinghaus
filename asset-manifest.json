@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/static/js/main.98311874.chunk.js",
-    "main.js.map": "/static/js/main.98311874.chunk.js.map",
-    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
-    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
-    "static/js/2.e18d3bcd.chunk.js": "/static/js/2.e18d3bcd.chunk.js",
-    "static/js/2.e18d3bcd.chunk.js.map": "/static/js/2.e18d3bcd.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.bb5570087e7992c23535407f01514d98.js": "/precache-manifest.bb5570087e7992c23535407f01514d98.js",
-    "service-worker.js": "/service-worker.js"
+    "main.js": "/alg-ebbinghaus/static/js/main.98311874.chunk.js",
+    "main.js.map": "/alg-ebbinghaus/static/js/main.98311874.chunk.js.map",
+    "runtime~main.js": "/alg-ebbinghaus/static/js/runtime~main.9c82e3b9.js",
+    "runtime~main.js.map": "/alg-ebbinghaus/static/js/runtime~main.9c82e3b9.js.map",
+    "static/js/2.e18d3bcd.chunk.js": "/alg-ebbinghaus/static/js/2.e18d3bcd.chunk.js",
+    "static/js/2.e18d3bcd.chunk.js.map": "/alg-ebbinghaus/static/js/2.e18d3bcd.chunk.js.map",
+    "index.html": "/alg-ebbinghaus/index.html",
+    "precache-manifest.d7beeafc8c75f808cb98e1ed6c134f26.js": "/alg-ebbinghaus/precache-manifest.d7beeafc8c75f808cb98e1ed6c134f26.js",
+    "service-worker.js": "/alg-ebbinghaus/service-worker.js"
   }
 }
