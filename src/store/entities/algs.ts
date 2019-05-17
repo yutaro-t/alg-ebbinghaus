@@ -41,5 +41,5 @@ export const algsReducer = reducerWithInitialState(initialState)
     };
   })
   .default((state, action) => {
-    return {...state};
+    return state;
   })

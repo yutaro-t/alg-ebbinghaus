@@ -65,5 +65,5 @@ export const algEditorReducer = reducerWithInitialState(initialState)
     }
   })
   .default((state, action) => {
-    return {...state};
+    return state;
   })

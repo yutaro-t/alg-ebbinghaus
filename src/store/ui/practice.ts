@@ -63,5 +63,5 @@ export const practiceReducer = reducerWithInitialState(initialState)
     }
   })
   .default((state, action) => {
-    return {...state};
+    return state;
   })

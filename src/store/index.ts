@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware} from "redux";
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { composeWithDevTools } from "redux-devtools-extension";
-import { createHashHistory } from 'history';
+import { createBrowserHistory } from 'history';
 import { createLogger } from 'redux-logger'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
@@ -9,13 +9,16 @@ import storage from 'redux-persist/lib/storage'
 import { timerMiddleware } from '../middlewares/timer';
 import { uiReducer } from './ui';
 import { entitiesReducer } from './entities';
+import { transformer } from '../utils/transformer';
+import { Alg } from './Alg';
 
-export const history = createHashHistory();
+export const history = createBrowserHistory();
 
 const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['entities'],
+  transforms: [transformer([Alg])],
 }
 
 export const rootReducer = combineReducers({

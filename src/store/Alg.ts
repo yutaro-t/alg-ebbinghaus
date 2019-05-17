@@ -21,10 +21,22 @@ export class Alg {
     return str.split(' ').map(s => mirrorMap[s] ? mirrorMap[s] : s).join(' ');
   }
 
+  static deserialize(str: string): Alg {
+    let {premove, base, auf} = JSON.parse(str);
+    return new Alg(premove, base, auf);
+  }
+
   constructor(readonly premove: string = '',
               readonly base: string = '',
               readonly auf: string = '',){}
   
+
+  serialize(): string{
+    const {premove, base, auf} = this;
+    return JSON.stringify({
+      premove, base, auf
+    });
+  }
   toString(): string {
     return this.premove + ' ' + this.base + ' ' + this.auf;
   }
